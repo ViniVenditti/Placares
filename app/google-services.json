@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "758669834151",
+    "project_id": "placares-cdf66",
+    "storage_bucket": "placares-cdf66.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:758669834151:android:791c1d621824d63cd96882",
+        "android_client_info": {
+          "package_name": "com.venditti.placares"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "758669834151-idqb6qv948tbu03l2qo8ceut2i0ffbu7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.venditti.placares",
+            "certificate_hash": "abb340d8616f16de427132c4c025a2c1a9bf6820"
+          }
+        },
+        {
+          "client_id": "758669834151-kjda0qj55jvipoad4qen9triv6rgcrfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9C949-PvYwUFeieKmUX0QXaITECDMfMg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "758669834151-kjda0qj55jvipoad4qen9triv6rgcrfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
