@@ -58,11 +58,11 @@ public class PointsFragment extends Fragment {
         recyclerView = inflate.findViewById(R.id.recyclerView);
         adapter = new PointsAdapter(listPlayer);
 
-        viewModel = ViewModelProvider(
-                getViewModelStore(),
-                BiscaViewModel.ViewModelFactory(
-
-                )).get(BiscaViewModel.class);
+//        viewModel = ViewModelProvider(
+//                getViewModelStore(),
+////                BiscaViewModel.ViewModelFactory(
+////
+////                )).get(BiscaViewModel.class);
 
         //Configura RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());

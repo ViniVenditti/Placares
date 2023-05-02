@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private PlayerAdapter adapter;
     private String game;
     private BiscaViewModel viewModel;
+    AtomicInteger gameCount = new AtomicInteger(0);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("Placares");
         setSupportActionBar(toolbar);
 
-        viewModel = new ViewModelProvider(this).get(BiscaViewModel.class);
+        carregaJogosPassados();
 
         game = binding.game.getSelectedItem().toString();
         Spinner spinner = binding.numberPlayers;
@@ -71,24 +73,28 @@ public class MainActivity extends AppCompatActivity {
         }else {
             Map<Integer, Players> mapPlayers = adapter.getMapPlayers();
             ArrayList<Players> players = new ArrayList<>(mapPlayers.values());
-            AtomicInteger gameCount = new AtomicInteger(0);
-            ConfigFireBase.getDataGameBiscaReference().addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    snapshot.getChildren().forEach(s -> {
-                        gameCount.getAndIncrement();
-                    });
-                    players.forEach(p -> p.salvar(game, gameCount.toString()));
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            players.forEach(p -> p.salvar(game, gameCount.toString()));
 
-                }
-            });
             Intent intent = new Intent(getApplicationContext(), BiscaActivity.class);
             startActivity(intent);
         }
+    }
+
+    private void carregaJogosPassados() {
+        ConfigFireBase.getDataGameBiscaReference().addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                snapshot.getChildren().forEach(s -> {
+                    gameCount.getAndIncrement();
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void carregarRecycleView(int count){
