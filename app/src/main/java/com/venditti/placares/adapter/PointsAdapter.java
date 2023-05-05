@@ -1,7 +1,5 @@
 package com.venditti.placares.adapter;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,20 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.venditti.placares.R;
 import com.venditti.placares.model.Players;
+import com.venditti.placares.model.Points;
 
 import java.util.List;
 
 public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.MyViewHolder> {
 
     private List<Players> listJogadores;
-
     public List<Players> getListJogadores() {
         return listJogadores;
-    }
-
-    public void setListJogadores(List<Players> listJogadores) {
-        this.listJogadores = listJogadores;
-        notifyDataSetChanged();
     }
 
     public PointsAdapter(List<Players> listJogadores){
@@ -44,34 +37,32 @@ public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        if(listJogadores.get(holder.getAdapterPosition()).getDoing() == -1){
-            holder.editFez.setText("");
-            holder.editFaz.setText("");
-        }
+        List<Points> listPoints = listJogadores.get(holder.getAdapterPosition()).getPoints();
+        holder.editFez.setText("");
+        holder.editFaz.setText("");
         holder.textPlayer.setText(listJogadores.get(holder.getAdapterPosition()).getName());
-        holder.textPontos.setText(listJogadores.get(holder.getAdapterPosition()).getPoints().toString());
-        holder.editFaz.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                listJogadores.get(holder.getAdapterPosition()).setDoing(Integer.valueOf(s.toString().isEmpty() ? "-1" : s.toString()));
-            }
-        });
-
-        holder.editFez.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            @Override
-            public void afterTextChanged(Editable s) {
-                listJogadores.get(holder.getAdapterPosition()).setDone(Integer.valueOf(s.toString().isEmpty() ? "-1" : s.toString()));
+        holder.textPontos.setText(listJogadores.get(holder.getAdapterPosition()).getTotal().toString());
+        holder.editFez.setOnFocusChangeListener((v, hasFocus) -> {
+            Points points = new Points();
+            if(!holder.editFez.getText().toString().isEmpty()) {
+                Integer doing = Integer.valueOf(holder.editFaz.getText().toString());
+                Integer done = Integer.valueOf(holder.editFez.getText().toString());
+                points.setDoing(doing);
+                points.setDone(done);
+                points.setSummation(calculaPontuacao(doing, done));
+                listPoints.add(points);
+                listJogadores.get(holder.getAdapterPosition()).setPoints(listPoints);
             }
         });
     }
+
+    private Integer calculaPontuacao(Integer doing, Integer done) {
+        if(done.equals(doing))
+            return done + 10;
+        else
+            return done;
+    }
+
 
     @Override
     public int getItemCount() {

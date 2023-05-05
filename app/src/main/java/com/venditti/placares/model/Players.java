@@ -5,12 +5,13 @@ import com.venditti.placares.config.ConfigFireBase;
 import com.venditti.placares.helper.DateCustom;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Players implements Serializable {
     private String name;
-    private Integer doing = -1;
-    private Integer done = -1;
-    private Integer points = 0;
+    private List<Points> points = new ArrayList<>();
+    private Integer total = 0;
 
     public Players() {
     }
@@ -37,27 +38,19 @@ public class Players implements Serializable {
         this.name = name;
     }
 
-    public Integer getDoing() {
-        return doing;
-    }
-
-    public void setDoing(Integer doing) {
-        this.doing = doing;
-    }
-
-    public Integer getDone() {
-        return done;
-    }
-
-    public void setDone(Integer done) {
-        this.done = done;
-    }
-
-    public Integer getPoints() {
+    public List<Points> getPoints() {
         return points;
     }
 
-    public void setPoints(Integer points) {
+    public void setPoints(List<Points> points) {
         this.points = points;
+    }
+
+    public Integer getTotal() {
+        return total;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
     }
 }

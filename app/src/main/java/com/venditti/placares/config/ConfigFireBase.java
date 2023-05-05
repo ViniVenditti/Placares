@@ -25,4 +25,12 @@ public class ConfigFireBase {
                 .child(DateCustom.dataAtual());
     }
 
+    public static DatabaseReference getPlayerRef(String game, String partida){
+        return ConfigFireBase.getFirebaseDatabase()
+                .child("placares")
+                .child(game)
+                .child(DateCustom.dataAtual())
+                .child(partida);
+    }
+
 }

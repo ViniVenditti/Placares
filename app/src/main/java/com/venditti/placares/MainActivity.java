@@ -36,7 +36,13 @@ public class MainActivity extends AppCompatActivity {
     private PlayerAdapter adapter;
     private String game;
     private BiscaViewModel viewModel;
-    AtomicInteger gameCount = new AtomicInteger(0);
+    private AtomicInteger gameCount;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        gameCount = new AtomicInteger(0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,17 +74,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startGame() {
+        Map<Integer, Players> mapPlayers = adapter.getMapPlayers();
+        ArrayList<Players> players = new ArrayList<>(mapPlayers.values());
         if(adapter.getMapPlayers().isEmpty()){
             Toast.makeText(getApplicationContext(), "preencher nome dos jogadores", Toast.LENGTH_SHORT).show();
         }else {
-            Map<Integer, Players> mapPlayers = adapter.getMapPlayers();
-            ArrayList<Players> players = new ArrayList<>(mapPlayers.values());
-
             players.forEach(p -> p.salvar(game, gameCount.toString()));
-
-            Intent intent = new Intent(getApplicationContext(), BiscaActivity.class);
-            startActivity(intent);
         }
+        Intent intent = new Intent(getApplicationContext(), BiscaActivity.class);
+        intent.putExtra("listaJogadores", players);
+        startActivity(intent);
     }
 
     private void carregaJogosPassados() {

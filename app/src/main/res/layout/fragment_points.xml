@@ -11,10 +11,22 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/txtRodada"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="7"
+        android:text="Rodada ="
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnCalcular"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -22,4 +34,5 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
         android:text="Calcular" />
+
 </LinearLayout>
