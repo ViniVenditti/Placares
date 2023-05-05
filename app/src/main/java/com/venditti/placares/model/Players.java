@@ -6,11 +6,13 @@ import com.venditti.placares.helper.DateCustom;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public class Players implements Serializable {
     private String name;
-    private List<Points> points = new ArrayList<>();
+    private HashMap<String, Points> points = new HashMap<>();
     private Integer total = 0;
 
     public Players() {
@@ -38,11 +40,11 @@ public class Players implements Serializable {
         this.name = name;
     }
 
-    public List<Points> getPoints() {
+    public HashMap<String, Points> getPoints() {
         return points;
     }
 
-    public void setPoints(List<Points> points) {
+    public void setPoints(HashMap<String, Points> points) {
         this.points = points;
     }
 

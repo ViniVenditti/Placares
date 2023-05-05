@@ -63,7 +63,7 @@ public class PointsFragment extends Fragment {
     }
 
     private void configuraAdapter() {
-        adapter = new PointsAdapter(listPlayer);
+        adapter = new PointsAdapter(listPlayer, rodada);
         //Configura RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -72,16 +72,17 @@ public class PointsFragment extends Fragment {
     }
 
     private void atualizaPontos() {
-        if(rodada < maximoRodada) rodada ++; else rodada--;
+        if(rodada < maximoRodada) rodada ++; else if (rodada == maximoRodada) {} else rodada--;
 
         adapter.getListJogadores().forEach(p -> {
-            int sum = p.getPoints().stream().mapToInt(Points::getSummation).sum();
+            int sum = p.getPoints().values().stream().mapToInt(Points::getSummation).sum();
             p.setTotal(sum);
 
             ConfigFireBase.getPlayerRef("Bisca", key[0])
                     .child(p.getName())
                     .setValue(p);
         });
+        adapter.setRodada(rodada);
         adapter.notifyDataSetChanged();
         binding.txtRodada.setText("Rodada = " + rodada);
     }
