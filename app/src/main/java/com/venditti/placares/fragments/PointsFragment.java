@@ -7,13 +7,16 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.venditti.placares.R;
 import com.venditti.placares.adapter.PointsAdapter;
+import com.venditti.placares.adapter.ScoreboardAdapter;
 import com.venditti.placares.config.ConfigFireBase;
 import com.venditti.placares.databinding.FragmentPointsBinding;
 import com.venditti.placares.model.Players;
@@ -26,10 +29,11 @@ public class PointsFragment extends Fragment {
 
     private List<Players> listPlayer;
     private PointsAdapter adapter;
+    private ScoreboardAdapter scoreboardAdapter;
     private FragmentPointsBinding binding;
-    private int rodada = 1;
+    private Integer rodada = 1;
     private int maximoRodada;
-    final String[] key = {""};
+
     public PointsFragment() {
         // Required empty public constructor
     }
@@ -37,7 +41,6 @@ public class PointsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        recoveryGame();
     }
 
     @Override
@@ -63,7 +66,7 @@ public class PointsFragment extends Fragment {
     }
 
     private void configuraAdapter() {
-        adapter = new PointsAdapter(listPlayer, rodada);
+        adapter = new PointsAdapter(listPlayer, rodada.toString());
         //Configura RecyclerView
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         binding.recyclerView.setLayoutManager(layoutManager);
@@ -72,38 +75,30 @@ public class PointsFragment extends Fragment {
     }
 
     private void atualizaPontos() {
-        if(rodada < maximoRodada) rodada ++; else if (rodada == maximoRodada) {} else rodada--;
+        if(rodada < maximoRodada) {
+            rodada ++;
+            adapter.setRodada(rodada.toString());
+        } else if (rodada == maximoRodada) {
 
-        adapter.getListJogadores().forEach(p -> {
+        } else {
+            rodada--;
+            adapter.setRodada(rodada+"v");
+        }
+        listPlayer = adapter.getListJogadores();
+        listPlayer.forEach(p -> {
             int sum = p.getPoints().values().stream().mapToInt(Points::getSummation).sum();
             p.setTotal(sum);
 
-            ConfigFireBase.getPlayerRef("Bisca", key[0])
+            ConfigFireBase.getPlayerRef("Bisca", ConfigFireBase.recoveryGame())
                     .child(p.getName())
                     .setValue(p);
         });
-        adapter.setRodada(rodada);
+
         adapter.notifyDataSetChanged();
         binding.txtRodada.setText("Rodada = " + rodada);
     }
 
-    private void recoveryGame() {
 
-        ConfigFireBase.getDataGameBiscaReference()
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot s : snapshot.getChildren()) {
-                            key[0] = s.getKey();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-
-    }
 
     private void getQtdRodada() {
         switch (listPlayer.size()) {

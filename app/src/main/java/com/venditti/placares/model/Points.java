@@ -1,6 +1,8 @@
 package com.venditti.placares.model;
 
-public class Points {
+import java.io.Serializable;
+
+public class Points implements Serializable {
 
     private int doing;
     private int done;

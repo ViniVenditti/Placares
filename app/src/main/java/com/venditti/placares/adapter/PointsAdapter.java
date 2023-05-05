@@ -21,16 +21,16 @@ import java.util.List;
 public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.MyViewHolder> {
 
     private List<Players> listJogadores;
-    private Integer rodada;
+    private String rodada;
     public List<Players> getListJogadores() {
         return listJogadores;
     }
 
-    public void setRodada(Integer rodada) {
+    public void setRodada(String rodada) {
         this.rodada = rodada;
     }
 
-    public PointsAdapter(List<Players> listJogadores, Integer rodada){
+    public PointsAdapter(List<Players> listJogadores, String rodada){
         this.listJogadores = listJogadores;
         this.rodada = rodada;
     }
@@ -46,11 +46,12 @@ public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        HashMap<String, Points> listPoints = listJogadores.get(position).getPoints();
+        HashMap<String, Points> listPoints = listJogadores.get(holder.getAdapterPosition()).getPoints();
 
         holder.editFaz.setText("");
-        holder.textPlayer.setText(listJogadores.get(position).getName());
-        holder.textPontos.setText(listJogadores.get(position).getTotal().toString());
+        holder.editFez.setText("");
+        holder.textPlayer.setText(listJogadores.get(holder.getAdapterPosition()).getName());
+        holder.textPontos.setText(listJogadores.get(holder.getAdapterPosition()).getTotal().toString());
 
         holder.editFez.addTextChangedListener(new TextWatcher() {
             @Override
@@ -69,8 +70,8 @@ public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.MyViewHold
                     points.setDoing(doing);
                     points.setDone(done);
                     points.setSummation(calculaPontuacao(doing, done));
-                    listPoints.put(rodada.toString(), points);
-                    listJogadores.get(position).setPoints(listPoints);
+                    listPoints.put(rodada, points);
+                    listJogadores.get(holder.getAdapterPosition()).setPoints(listPoints);
                 }
             }
         });
