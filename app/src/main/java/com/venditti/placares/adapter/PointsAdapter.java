@@ -1,5 +1,7 @@
 package com.venditti.placares.adapter;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,21 +39,29 @@ public class PointsAdapter extends RecyclerView.Adapter<PointsAdapter.MyViewHold
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        List<Points> listPoints = listJogadores.get(holder.getAdapterPosition()).getPoints();
+        List<Points> listPoints = listJogadores.get(position).getPoints();
         holder.editFez.setText("");
         holder.editFaz.setText("");
-        holder.textPlayer.setText(listJogadores.get(holder.getAdapterPosition()).getName());
-        holder.textPontos.setText(listJogadores.get(holder.getAdapterPosition()).getTotal().toString());
-        holder.editFez.setOnFocusChangeListener((v, hasFocus) -> {
-            Points points = new Points();
-            if(!holder.editFez.getText().toString().isEmpty()) {
-                Integer doing = Integer.valueOf(holder.editFaz.getText().toString());
-                Integer done = Integer.valueOf(holder.editFez.getText().toString());
-                points.setDoing(doing);
-                points.setDone(done);
-                points.setSummation(calculaPontuacao(doing, done));
+        holder.textPlayer.setText(listJogadores.get(position).getName());
+        holder.textPontos.setText(listJogadores.get(position).getTotal().toString());
+
+        holder.editFez.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            @Override
+            public void afterTextChanged(Editable s) {
+                Points points = new Points();
+                if(!holder.editFez.getText().toString().isEmpty()) {
+                    Integer doing = Integer.valueOf(holder.editFaz.getText().toString());
+                    Integer done = Integer.valueOf(holder.editFez.getText().toString());
+                    points.setDoing(doing);
+                    points.setDone(done);
+                    points.setSummation(calculaPontuacao(doing, done));
+                }
                 listPoints.add(points);
-                listJogadores.get(holder.getAdapterPosition()).setPoints(listPoints);
+                listJogadores.get(position).setPoints(listPoints);
             }
         });
     }

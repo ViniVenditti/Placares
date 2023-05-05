@@ -2,31 +2,31 @@ package com.venditti.placares.model;
 
 public class Points {
 
-    private Integer doing;
-    private Integer done;
-    private Integer summation;
+    private int doing;
+    private int done;
+    private int summation;
 
-    public Integer getDoing() {
+    public int getDoing() {
         return doing;
     }
 
-    public void setDoing(Integer doing) {
+    public void setDoing(int doing) {
         this.doing = doing;
     }
 
-    public Integer getDone() {
+    public int getDone() {
         return done;
     }
 
-    public void setDone(Integer done) {
+    public void setDone(int done) {
         this.done = done;
     }
 
-    public Integer getSummation() {
+    public int getSummation() {
         return summation;
     }
 
-    public void setSummation(Integer summation) {
+    public void setSummation(int summation) {
         this.summation = summation;
     }
 }
