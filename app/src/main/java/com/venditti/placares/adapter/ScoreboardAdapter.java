@@ -40,12 +40,14 @@ public class ScoreboardAdapter extends RecyclerView.Adapter<ScoreboardAdapter.My
         holder.textTotalGeral.setText(listJogadores.get(holder.getAdapterPosition()).getTotal().toString());
         HashMap<String, Points> points = listJogadores.get(holder.getAdapterPosition()).getPoints();
 
-        adapter = new ScoreboardPointsAdapter(points, "1");
-        //Define Layout Categoria
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
-        holder.recyclerPoints.setLayoutManager(layoutManager);
-        holder.recyclerPoints.setHasFixedSize(true);
-        holder.recyclerPoints.setAdapter(adapter);
+        if(!points.isEmpty()){
+            adapter = new ScoreboardPointsAdapter(points, points.keySet().toString());
+            //Define Layout Categoria
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+            holder.recyclerPoints.setLayoutManager(layoutManager);
+            holder.recyclerPoints.setHasFixedSize(true);
+            holder.recyclerPoints.setAdapter(adapter);
+        }
     }
 
     @Override

@@ -1,17 +1,28 @@
 package com.venditti.placares.model;
 
-import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class BiscaViewModel extends ViewModel {
 
     private List<Players> listPlayers;
+    public LiveData<List<Players>> onListChange = new LiveData<List<Players>>() {};
 
+    public LiveData<List<Players>> getListPlayers() {
+        return onListChange;
+    }
 
+    public void setListPlayers(List<Players> listPlayers) {
+        this.listPlayers = listPlayers;
+    }
+
+    public BiscaViewModel() {
+    }
+
+    /*
     public static class ViewModelFactory implements ViewModelProvider.Factory {
         private BiscaViewModel biscaViewModel;
         @NonNull
@@ -27,6 +38,7 @@ public class BiscaViewModel extends ViewModel {
             throw new IllegalArgumentException("Unkown ViewModel Class");
         }
     }
+*/
 
 /*    private final MutableLiveData<AtomicInteger> gameCount = new MutableLiveData<>();
     public LiveData<AtomicInteger> getGameCount(){

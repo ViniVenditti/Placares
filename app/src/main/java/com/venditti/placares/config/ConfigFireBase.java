@@ -11,6 +11,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.venditti.placares.helper.DateCustom;
 
+import java.util.Locale;
+
 public class ConfigFireBase {
     private static DatabaseReference firebase;
     private static StorageReference storage;
@@ -36,25 +38,6 @@ public class ConfigFireBase {
                 .child(game)
                 .child(DateCustom.dataAtual())
                 .child(partida);
-    }
-
-    public static String recoveryGame() {
-        final String[] key = {""};
-        ConfigFireBase.getDataGameBiscaReference()
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot s : snapshot.getChildren()) {
-                            key[0] = s.getKey();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-        return key[0];
-
     }
 
 }

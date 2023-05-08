@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("Placares");
         setSupportActionBar(toolbar);
 
+        viewModel = new ViewModelProvider(this).get(BiscaViewModel.class);
+
         carregaJogosPassados();
 
         game = binding.game.getSelectedItem().toString();
@@ -81,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         }else {
             players.forEach(p -> p.salvar(game, gameCount.toString()));
         }
+
+
         Intent intent = new Intent(getApplicationContext(), BiscaActivity.class);
         intent.putExtra("listaJogadores", players);
         startActivity(intent);

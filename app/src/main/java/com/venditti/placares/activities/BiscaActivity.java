@@ -32,6 +32,7 @@ public class BiscaActivity extends AppCompatActivity {
                 .add("Pontuação", PointsFragment.class)
                 .add("Placar", ScoreboardFragment.class)
                 .create());
+
         ViewPager viewPager = binding.viewpager;
         viewPager.setAdapter(adapter);
         binding.viewPagerTab.setViewPager(viewPager);
